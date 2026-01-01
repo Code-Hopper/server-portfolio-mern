@@ -34,13 +34,13 @@ const sendOTP = async (adminEmail) => {
 
 
         const otp = generateOTP();
-        otpStore[email] = { otp, expiresAt: Date.now() + 5 * 60 * 1000 }; // OTP expires in 5 minutes
+        otpStore[email] = { otp, expiresAt: Date.now() + 30 * 60 * 1000 }; // OTP expires in 30 minutes
 
         await transporter.sendMail({
             from: `"Code-Hopper" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: "Code-hopper Login OTP",
-            html: `<p>your opt is <span style="color:red;"> ${otp} </span> , it is valid for 5 mins!</p>`
+            html: `<p>your opt is <span style="color:red;"> ${otp} </span> , it is valid for 30 mins!</p>`
         });
 
         // now when opt is genrated return to login function 
@@ -88,11 +88,11 @@ const verifyOTP = async (req, res) => {
 
         console.log(result)
 
-        res.status(200).json({ message: "OTP verified successfully and genrated token", token });
+        res.status(202).json({ message: "OTP verified successfully and genrated token", token });
 
     } catch (error) {
         console.error("Error verifying OTP:", error);
-        res.status(500).json({ message: "Error verifying OTP", error: error.message });
+        res.status(500).json({ message: "Error verifying OTP", err: error.message });
     }
 };
 
@@ -142,5 +142,7 @@ let AdminLogin = async (req, res) => {
         res.status(400).json({ message: "Problem while admin login", err })
     }
 }
+
+
 
 export { verifyOTP, AdminLogin };
