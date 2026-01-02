@@ -18,10 +18,15 @@ let corsOption = {
     method: "*"
 }
 app.use(express.urlencoded({ extended: false }));
+
 app.use(express.json())
+
 app.use(cors(corsOption))
+
 app.use(AdminRouter)
+
 app.use(GenralRouter)
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port} !`)
 })
