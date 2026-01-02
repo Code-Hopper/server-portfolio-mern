@@ -17,11 +17,8 @@ let corsOption = {
     origin: "*",
     method: "*"
 }
-
 app.use(express.urlencoded({ extended: false }));
-
 app.use(express.json())
-
 app.use(cors(corsOption))
 app.use(AdminRouter)
 app.use(GenralRouter)
